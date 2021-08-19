@@ -9,7 +9,7 @@ loan_df = pd.read_csv('loan_data.csv')
 
 loan_df['annual.inc'] = np.exp(loan_df['log.annual.inc'])
 
-fig1 = px.histogram(loan_df, x="not.fully.paid")
+fig1 = px.histogram(loan_df, x="not.fully.paid", width=1280, height=720)
 fig1.update_layout(bargap=0.2)
 
 loan_df["not.fully.paid"] = loan_df["not.fully.paid"].astype(str)
@@ -17,29 +17,41 @@ fig2 = px.scatter(loan_df, x="fico",
                   y="revol.util",
                   color="not.fully.paid",
                   trendline="ols",
-                  title="Taxa de alguma coisa em relação a outra")
+                  title="Taxa de alguma coisa em relação a outra",
+                  width=1280, height=720)
+
 
 fig3 = px.scatter(loan_df,
                   x="fico", 
                   y="int.rate",
                   color="not.fully.paid",
                   trendline='ols',
-                  title="Taxa de alguma coisa em relação a outra")
+                  title="Taxa de alguma coisa em relação a outra",
+                  width=1280, height=720)
 
 fig4 = px.histogram(loan_df, x="annual.inc", color="not.fully.paid",
                     marginal="violin", # or violin, rug
                     hover_data=loan_df.columns,
-                    title='Histograma e Violin plot do Annual Income em relação a not.fully.paid')
+                    title='Histograma e Violin plot do Annual Income em relação a not.fully.paid',
+                    width=1280, height=720)
 
 fig5 = px.histogram(loan_df, x="installment", color="not.fully.paid",
                     marginal="violin", # or violin, rug
                     hover_data=loan_df.columns,
-                    title='Histograma e Violin plot do Installment em relação a not.fully.paid')
+                    title='Histograma e Violin plot do Installment em relação a not.fully.paid',
+                    width=1280, height=720)
 
 fig6 = px.scatter_3d(loan_df, x='int.rate', y='revol.util', z='fico',
                      color='not.fully.paid', 
-                     labels={'int.rate':'Interest Rate', 'revol.util': '% Usada de crédito', 'days.with.cr.line': 'FICO Score'})
+                     labels={'int.rate':'Interest Rate', 'revol.util': '% Usada de crédito', 'days.with.cr.line': 'FICO Score'}, 
+                     width=1280, height=720)
 
+fig7 = px.bar(loan_df, x="not.fully.paid", barmode="group", facet_col="purpose",
+              title='Distribuição dos Propósitos em relação a not.fully.paid',
+              category_orders={"purpose": ['debt_consolidation', 'all_other', 'credit_card', 
+                                           'home_improvement', 'small_business', 'major_purchase',
+                                           'educational']},
+              width=1080, height=680)
 
 markdown_1 = '''
 ---
