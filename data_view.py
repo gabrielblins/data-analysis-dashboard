@@ -9,7 +9,7 @@ loan_df = pd.read_csv('loan_data.csv')
 
 loan_df['annual.inc'] = np.exp(loan_df['log.annual.inc'])
 
-fig1 = px.histogram(loan_df, x="not.fully.paid", width=1280, height=720)
+fig1 = px.histogram(loan_df, x="not.fully.paid", width=1080, height=680)
 fig1.update_layout(bargap=0.2)
 
 loan_df["not.fully.paid"] = loan_df["not.fully.paid"].astype(str)
@@ -17,8 +17,8 @@ fig2 = px.scatter(loan_df, x="fico",
                   y="revol.util",
                   color="not.fully.paid",
                   trendline="ols",
-                  title="Taxa de alguma coisa em relação a outra",
-                  width=1280, height=720)
+                  title="Relação taxa de utilização de crédito rotativo e o score FICO",
+                  width=1080, height=680)
 
 
 fig3 = px.scatter(loan_df,
@@ -26,25 +26,26 @@ fig3 = px.scatter(loan_df,
                   y="int.rate",
                   color="not.fully.paid",
                   trendline='ols',
-                  title="Taxa de alguma coisa em relação a outra",
-                  width=1280, height=720)
+                  title="Relação entre o score FICO e a taxa de juros",
+                  width=1080, height=680)
 
 fig4 = px.histogram(loan_df, x="annual.inc", color="not.fully.paid",
                     marginal="violin", # or violin, rug
                     hover_data=loan_df.columns,
                     title='Histograma e Violin plot do Annual Income em relação a not.fully.paid',
-                    width=1280, height=720)
+                    width=1080, height=680)
 
 fig5 = px.histogram(loan_df, x="installment", color="not.fully.paid",
                     marginal="violin", # or violin, rug
                     hover_data=loan_df.columns,
                     title='Histograma e Violin plot do Installment em relação a not.fully.paid',
-                    width=1280, height=720)
+                    width=1080, height=680)
 
 fig6 = px.scatter_3d(loan_df, x='int.rate', y='revol.util', z='fico',
                      color='not.fully.paid', 
-                     labels={'int.rate':'Interest Rate', 'revol.util': '% Usada de crédito', 'days.with.cr.line': 'FICO Score'}, 
-                     width=1280, height=720)
+                     labels={'int.rate':'Interest Rate', 'revol.util': '% Usada de crédito', 'fico': 'FICO Score'},
+                      
+                     width=1080, height=680)
 
 fig7 = px.bar(loan_df, x="not.fully.paid", barmode="group", facet_col="purpose",
               title='Distribuição dos Propósitos em relação a not.fully.paid',
@@ -52,10 +53,10 @@ fig7 = px.bar(loan_df, x="not.fully.paid", barmode="group", facet_col="purpose",
                                            'home_improvement', 'small_business', 'major_purchase',
                                            'educational']},
               width=1080, height=680)
+fig7.update_layout(bargap=0.2)
 
 markdown_1 = '''
----
-## Columns Info
+### Informações das Colunas
 * **credit.policy**: 1 se o usuário se encontra sobre os critérios de crédito do LendingClub.com, e 0 caso ao contrário.
 * **purpose**: O propósito do empréstimo (recebe valores como "creditcard", "debtconsolidation", "educational", "majorpurchase", "smallbusiness", and "all_other").
 * **int.rate**: Juros do empréstimo, como uma proporção (se a taxa de juros for 11% será registrada como 0.11).
@@ -73,3 +74,32 @@ markdown_1 = '''
 * **not.fully.paid**: 0 se o benficiado pagou todo seu débito, 1 se não foi totalmente pago.
 '''
 
+markdown_2 = '''
+### Distribuição de beneficiados que pagaram (0) e que não pagaram (1)
+
+Nesse gráfico buscamos visualizar com que taxa temos que os benefiados pelo empréstimos bancário vieram a deixar de pagar suas dívidas. Dessa maneira podemos concluir se o banco em questão obteve lucro sobre seu sistema de empréstimo
+'''
+
+markdown_3 = '''
+### Scatter do Score FICO com o saldo rotativo devido
+
+Com o plot em questão analisamos a relação entre o score financeiro FICO de cada indivíduo e a sua capacidade de pagar o empréstimo em dia, dessa maneira fazendo uma análise do sistema de empréstimo. Análisando o gráfico percebemos por meio das **regressões Lineares** que quanto menor for o FICO do indivíduo mais ele é propenso a deixar de pagar uma maior quantia da parcela.
+'''
+
+markdown_4 = '''
+### Scatter plot com curva de tendência do Score FICO com a taxa de juros
+
+Nesse plot buscamos traçar uma relação  entre a taxa de juros imposta pelo banco e o FICO do indivíduo, dessa maneira tentamos entender a política de empréstimo do banco. Analisando o plot concluímos que o FICO é inversamente proporcional aos juros, isso se dá pois o banco tem poucos indícios que um indivíduo com um score FICO baixo terminará de pagar seu empréstimo ou pagará seu empréstimo no tempo correto.
+'''
+
+markdown_5 = '''
+### Histograma da receita anual dos beneficiados
+
+Com esse histrograma traçamos o perfil financeiro das pessoas que requisitam e adquirem seus empréstimos. O gráfico de violina ajuda na interpretação na densidade dos beneficiados por valor de renda anual.
+'''
+
+markdown_6 = '''
+### Bar plot para cada propósito
+
+Com esse gráfico temos o propósito de analisar quais dos propósitos de requisição de empréstimo são mais propensos a não conseguirem apagar seus débitos com o banco.
+'''
