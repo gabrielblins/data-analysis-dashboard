@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 st.title('DashBoard de análise de empréstimos')
-st.write('Esse prejeto consiste na analise de dados relativo a empréstimos no qual tentamos visualizar relações entre features que possuimos')
+st.write('Esse prejeto consiste na analise de dados relativo à empréstimos no qual tentamos visualizar relações entre features que possuimos')
 
 st.sidebar.title("Configuração")
 check_box = st.sidebar.checkbox(label="mostrar database")
