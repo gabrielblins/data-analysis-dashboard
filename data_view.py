@@ -1,4 +1,6 @@
+from matplotlib.pyplot import xlabel, ylabel
 import plotly.express as px
+import plotly.figure_factory as ff
 import pandas as pd
 import numpy as np
 import seaborn as sns
@@ -23,4 +25,9 @@ fig3 = px.scatter(loan_df,
                   color="not.fully.paid",
                   trendline='ols',
                   title="Taxa de alguma coisa em relação a outra")
+
+fig4 = px.histogram(loan_df, x="annual.inc", color="not.fully.paid",
+                    marginal="violin", # or violin, rug
+                    hover_data=loan_df.columns,
+                    title='Histograma e Violin plot do Annual Income em relação a not.fully.paid')
 

@@ -1,5 +1,5 @@
 import streamlit as st
-from data_view import fig1, fig2, loan_df, fig3
+from data_view import fig1, fig2, loan_df, fig3, fig4
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -17,6 +17,7 @@ if check_box:
 st.plotly_chart(fig1)
 st.plotly_chart(fig2)
 st.plotly_chart(fig3)
+st.plotly_chart(fig4)
 
 plt.figure(figsize=(10,8))
 sns.histplot(data=loan_df,
