@@ -1,6 +1,8 @@
 from matplotlib.pyplot import xlabel, ylabel
 import plotly.express as px
 import plotly.figure_factory as ff
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 import pandas as pd
 import numpy as np
 import seaborn as sns
@@ -55,6 +57,24 @@ fig7 = px.bar(loan_df, x="not.fully.paid", barmode="group", facet_col="purpose",
               width=1080, height=680)
 fig7.update_layout(bargap=0.2)
 
+labels = ['debt_consolidation', 'all_other', 'credit_card', 
+          'home_improvement', 'small_business', 'major_purchase',
+          'educational']
+
+value0 = loan_df[loan_df['not.fully.paid']==0]['purpose'].value_counts().values
+value1 = loan_df[loan_df['not.fully.paid']==1]['purpose'].value_counts().values
+
+# fig8 = make_subplots(1, 2, specs=[[{'type':'domain'}, {'type':'domain'}]],
+#                     subplot_titles=['Paid', 'Not fully paid'])
+# fig8.add_trace(go.Pie(labels=labels, values=value0, scalegroup='one',
+#                      name="Purpose for paid"), 1, 1)
+# fig8.add_trace(go.Pie(labels=labels, values=value1, scalegroup='one',
+#                      name="Purpose for not paid"), 1, 2)
+
+# fig8.update_layout(title_text='Propósito do empréstimo em relação a not.fully.paid')
+
+fig8 = px.pie(loan_df, names='purpose', title='Pie Chart dos propósitos dos empréstimos')
+
 markdown_1 = '''
 ### Informações das Colunas
 * **credit.policy**: 1 se o usuário se encontra sobre os critérios de crédito do LendingClub.com, e 0 caso ao contrário.
@@ -102,4 +122,22 @@ markdown_6 = '''
 ### Bar plot para cada propósito
 
 Com esse gráfico temos o propósito de analisar quais dos propósitos de requisição de empréstimo são mais propensos a não conseguirem apagar seus débitos com o banco.
+'''
+
+markdown_7 = '''
+Gráfico 3D entre taxa de juros, score FICO e crédito usado
+
+Dessa maneira temos a chance de analisar simultaniamente três variáveis da nossa tabela em um único plot.
+'''
+markdown_8 = '''
+---
+
+## Conclusão
+
+<p align="justify">
+Ao final do trabalho conseguimos concluir as políticas de empréstimos do banco em que está fortemente atrelado a com o score FICO e o porpósito de requisição de empréstimo do indivíduo. O banco busca priorizar os invíduos com um alto score FICO dando a eles o privilêgio de uma baixa taxa de juros sobre as parcelas do empréstimo e o contrário para aqueles com um baixo FICO.
+</p>
+<p>
+Outro ponto fortemente analisado é o resultado a implementação dessa política de empréstimo do banco a partir da taxa de beneficiados que terminaram de pagar seus empréstimos. Logo no primeiro gráfico podemos perceber que a maioria os indivíduos selecionados para receber empréstimos pagarm integralmente suas dívidas, provando o sucesso do modelo implementado.
+<p/>
 '''
